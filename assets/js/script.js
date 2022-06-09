@@ -1,7 +1,5 @@
 // current day is displayed at the top of the calendar
-var todaysDate = function() {
-    moment().format('MMMM Do YYYY');
-}
+const todaysDate = moment("currentDay")
     
 
 // in the container, make three columns and 10 rows
