@@ -1,36 +1,36 @@
-// current day is displayed at the top of the calendar
-const todaysDate = moment("currentDay")
-    
+// **Global Variables**
+var saveButton = document.querySelectorAll(".saveBtn");
 
-// in the container, make three columns and 10 rows
+// **Current Date - Today's Date: **
+var todaysDate = moment().format("MMMM Do, YYYY");
+console.log(todaysDate);
+document.getElementById("currentDay").innerHTML = ("Today's Date: " + todaysDate);
 
-// first column will contain time (standard business hours 8 AM - 5 PM)
+// *
+var getCurrentHour = moment().hour();
+console.log(getCurrentHour);
 
-// second column will contain a timeblocks where you can enter an event
+for (i = 8; i < 18; i++) {
+    var data = localStorage.getItem(i);
+    var textArea = document.getElementById(i);
+    textArea.value = data;
+    if (getCurrentHour > i) {
+        textArea.classList.add("past");
+    } else if (getCurrentHour < i) {
+        textArea.classList.add("future");
+    } else {
+        textArea.classList.add("present");
+    }
+};
 
-// third column will be the save button
+var saveEvent = function (event) {
+    var id = this.getAttribute("data-id");
+    var textArea = document.getElementById(id);
+    localStorage.setItem(id, textArea.value);
+};
 
-// each row will correspond with a time
-/* **Code from Office Hours held on 06/04/22 - storing for reference**
-const nineAm = new Date('June 4, 2022 09:00:00');
-const today = new Date();
+console.log(saveButton)
 
-
-const nineAmEl = document.createElement('div');
-nineAmEl.style.width = '50px';
-nineAmEl.style.height = '50px';
-
-if(nineAm < Date.now()) {
-    nineAmEl.style.backgroundColor = 'red';
-} else {
-    nineAmEl.style.backgroundColor = 'green';
-}
-
-
-document.body.append(nineAmEl); */
-
-// past time blocks = red, present timeblocks = grey, future timeblock = green
-
-// the text for the event is saved in local storage
-
-// when page refreshes, events are still available
+for (i = 0; i < saveButton.length; i++) {
+    saveButton[i].addEventListener("click", saveEvent)
+};
